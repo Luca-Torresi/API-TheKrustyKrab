@@ -14,6 +14,7 @@ public class Cliente {
     private Long ID_cliente;
     private String nombre;
     private String apellido;
+    @Column(unique = true)
     private String email;
     private String telefono;
     private String password;

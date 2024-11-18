@@ -66,6 +66,8 @@ public class ServicioProducto {
         for(Producto producto : productos){
             PrecioUnitarioDTO precioUnitarioDTO = PrecioUnitarioDTO.builder()
                     .nombreProducto(producto.getNombreProducto())
+                    .descripcion(producto.getDescripcion())
+                    .imagen(producto.getImagen())
                     .precio(Math.round(calcularCostoProducto(producto) * 1.3))
                     .build();
 

@@ -9,5 +9,7 @@ import lombok.NoArgsConstructor;
 public class PrecioUnitarioDTO {
 
     private String nombreProducto;
+    private String descripcion;
+    private String imagen;
     private double precio;
 }

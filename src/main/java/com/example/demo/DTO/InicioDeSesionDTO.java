@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class InicioDeSesionDTO {
 
-    private String mail;
+    private String email;
     private String password;
 }

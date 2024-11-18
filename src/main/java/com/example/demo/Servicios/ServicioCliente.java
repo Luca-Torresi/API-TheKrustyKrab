@@ -57,23 +57,20 @@ public class ServicioCliente {
     }
 
     public boolean verificarInicioDeSesion(RespuestaInicioDeSesion respuestaInicioDeSesion, InicioDeSesionDTO inicioDeSesionDTO) {
-        Optional<Cliente> clienteOpcional = repositorioCliente.findByEmail(inicioDeSesionDTO.getMail());
+        Optional<Cliente> clienteOpcional = repositorioCliente.findByEmail(inicioDeSesionDTO.getEmail());
 
         if(clienteOpcional.isPresent()) {
             Cliente cliente = clienteOpcional.get();
 
             if(cliente.getPassword().equals(inicioDeSesionDTO.getPassword())){
                 respuestaInicioDeSesion.setMensaje("Inicio exitoso");
-                respuestaInicioDeSesion.setToken("");
                 return true;
             } else{
                 respuestaInicioDeSesion.setMensaje("Contraseña incorrecta");
-                respuestaInicioDeSesion.setCodigoError(401);
                 return false;
             }
         } else{
             respuestaInicioDeSesion.setMensaje("El email no existe");
-            respuestaInicioDeSesion.setCodigoError(401);
             return false;
         }
     }

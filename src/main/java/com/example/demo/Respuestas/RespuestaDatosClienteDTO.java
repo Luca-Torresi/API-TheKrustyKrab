@@ -12,4 +12,5 @@ public class RespuestaDatosClienteDTO {
     private String apellido;
     private String email;
     private String telefono;
+    private String imagen;
 }

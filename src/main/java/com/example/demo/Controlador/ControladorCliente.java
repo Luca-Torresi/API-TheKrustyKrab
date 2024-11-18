@@ -7,6 +7,7 @@ import com.example.demo.Respuestas.RespuestaDireccionesDTO;
 import com.example.demo.Respuestas.RespuestaInicioDeSesion;
 import com.example.demo.Servicios.ServicioCliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,14 @@ public class ControladorCliente {
 
     @PostMapping("/registrar")
     public ResponseEntity<String> registrar(@RequestBody ClienteDTO clienteDTO) {
-        servicioCliente.guardarCliente(clienteDTO);
-
-        return ResponseEntity.ok("El cliente fue registrado correctamente");
+        try {
+            servicioCliente.guardarCliente(clienteDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Cliente registrado exitosamente.");
+        } catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El email ya existe.");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error inesperado.");
+        }
     }
 
     @PostMapping("/inicioDeSesion")

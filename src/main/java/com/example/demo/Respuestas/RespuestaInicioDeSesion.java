@@ -8,6 +8,4 @@ import lombok.NoArgsConstructor;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class RespuestaInicioDeSesion {
     private String mensaje;
-    private String token;
-    private Integer codigoError;
 }
