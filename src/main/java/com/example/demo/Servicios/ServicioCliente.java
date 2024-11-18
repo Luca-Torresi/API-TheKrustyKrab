@@ -116,6 +116,7 @@ public class ServicioCliente {
                 .apellido(cliente.getApellido())
                 .email(cliente.getEmail())
                 .telefono(cliente.getTelefono())
+                .imagen(cliente.getImagen())
                 .build();
 
         return respuestaDatosClienteDTO;
