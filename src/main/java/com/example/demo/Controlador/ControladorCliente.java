@@ -48,6 +48,17 @@ public class ControladorCliente {
         }
     }
 
+    @PostMapping("/inicioDeSesionAdministrador")
+    public ResponseEntity<RespuestaInicioDeSesion> inicioDeSesionAdministrador(@RequestBody InicioDeSesionDTO inicioDeSesionDTO) {
+        RespuestaInicioDeSesion respuestaInicioDeSesion = new RespuestaInicioDeSesion();
+
+        if(servicioCliente.verificarInicioDeSesionAdministrador(respuestaInicioDeSesion, inicioDeSesionDTO)){
+            return ResponseEntity.ok(respuestaInicioDeSesion);
+        } else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(respuestaInicioDeSesion);
+        }
+    }
+
     @PostMapping("/guardarDireccion")
     public ResponseEntity<String> guardarDireccion(@RequestBody DireccionDTO direccionDTO) {
         servicioCliente.guardarNuevaDireccion(direccionDTO);

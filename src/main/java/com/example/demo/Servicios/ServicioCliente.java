@@ -1,8 +1,10 @@
 package com.example.demo.Servicios;
 
 import com.example.demo.DTO.*;
+import com.example.demo.Entidades.Administrador;
 import com.example.demo.Entidades.Cliente;
 import com.example.demo.Entidades.Direccion;
+import com.example.demo.Repositorio.RepositorioAdministrador;
 import com.example.demo.Repositorio.RepositorioCliente;
 import com.example.demo.Repositorio.RepositorioDireccion;
 import com.example.demo.Respuestas.RespuestaDatosClienteDTO;
@@ -20,11 +22,13 @@ public class ServicioCliente {
 
     private final RepositorioCliente repositorioCliente;
     private final RepositorioDireccion repositorioDireccion;
+    private final RepositorioAdministrador repositorioAdministrador;
 
     @Autowired
-    public ServicioCliente(RepositorioCliente repositorioCliente, RepositorioDireccion repositorioDireccion){
+    public ServicioCliente(RepositorioCliente repositorioCliente, RepositorioDireccion repositorioDireccion, RepositorioAdministrador repositorioAdministador){
         this.repositorioCliente = repositorioCliente;
         this.repositorioDireccion = repositorioDireccion;
+        this.repositorioAdministrador = repositorioAdministador;
     }
 
     public void guardarCliente(ClienteDTO clienteDTO) {
@@ -63,6 +67,25 @@ public class ServicioCliente {
             Cliente cliente = clienteOpcional.get();
 
             if(cliente.getPassword().equals(inicioDeSesionDTO.getPassword())){
+                respuestaInicioDeSesion.setMensaje("Inicio exitoso");
+                return true;
+            } else{
+                respuestaInicioDeSesion.setMensaje("Contraseña incorrecta");
+                return false;
+            }
+        } else{
+            respuestaInicioDeSesion.setMensaje("El email no existe");
+            return false;
+        }
+    }
+
+    public boolean verificarInicioDeSesionAdministrador(RespuestaInicioDeSesion respuestaInicioDeSesion, InicioDeSesionDTO inicioDeSesionDTO) {
+        Optional<Administrador> administradorOpcional = repositorioAdministrador.findByEmail(inicioDeSesionDTO.getEmail());
+
+        if(administradorOpcional.isPresent()){
+            Administrador administrador = administradorOpcional.get();
+
+            if(administrador.getPassword().equals(inicioDeSesionDTO.getPassword())){
                 respuestaInicioDeSesion.setMensaje("Inicio exitoso");
                 return true;
             } else{
