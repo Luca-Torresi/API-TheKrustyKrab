@@ -42,9 +42,9 @@ public class ControladorContable {
         servicioContable.crearCuenta(cuentaDTO);
     }
 
-    @GetMapping("/libroDiario")
-    public ResponseEntity<LibroDiarioDTO> mostrarLibroDiario(){
-        List<Object[]> resultados = repositorioMovimiento.obtenerLibroDiario();
+    @PostMapping("/libroDiario")
+    public ResponseEntity<LibroDiarioDTO> mostrarLibroDiario(@RequestBody FechaLibroDiarioDTO fechaLibroDiarioDTO){
+        List<Object[]> resultados = repositorioMovimiento.obtenerLibroDiario(fechaLibroDiarioDTO.getFecha());
 
         List<RegistroLibroDiarioDTO> registros = new ArrayList<>();
         for (Object[] resultado : resultados) {

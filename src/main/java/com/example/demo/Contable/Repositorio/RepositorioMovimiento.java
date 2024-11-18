@@ -31,8 +31,9 @@ public interface RepositorioMovimiento extends JpaRepository<Movimiento, Long> {
             "    CASE WHEN tipo = 'haber' THEN monto ELSE 0 END AS haber\n" +
             "FROM movimiento\n" +
             "INNER JOIN cuenta ON movimiento.id_cuenta = cuenta.id_cuenta\n" +
-            "INNER JOIN asiento_contable ON movimiento.id_asiento_contable = asiento_contable.id_asiento_contable;", nativeQuery = true)
-    List<Object[]> obtenerLibroDiario();
+            "INNER JOIN asiento_contable ON movimiento.id_asiento_contable = asiento_contable.id_asiento_contable\n" +
+            "WHERE fecha = :fecha;", nativeQuery = true)
+    List<Object[]> obtenerLibroDiario(@Param("fecha") LocalDate fecha);
 
     @Query(value = "SELECT fecha, nombre_cuenta, \n" +
             "    CASE WHEN tipo = 'debe' THEN monto ELSE 0 END AS debe,\n" +
